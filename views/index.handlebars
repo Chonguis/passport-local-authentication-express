@@ -1,10 +1,15 @@
-<div>
-  {{#if user}}
-    <p>You are currently logged in as {{user}}</p>
-    <a href="/logout">Log out</a>
-  {{else}}
-    <a href="/login">Login</a>
-    <br>
-    <a href="/register">Register</a>
-  {{/if}}
+<div class="jumbotron text-center">
+    <h1><span class="fa fa-lock"></span>Local authentication with Passport.js</h1>
+
+    <div>
+      {{#if user}}
+        <p>You are currently logged in as {{user}}</p>
+        <a href="/logout">Log out</a>
+      {{else}}
+        <a href="/login" class="btn btn-default"><span class="fa fa-user"></span> Local Login</a>
+        <br>
+        <a href="/register" class="btn btn-default"><span class="fa fa-user"></span> Local Register</a>
+      {{/if}}
+    </div>
+
 </div>

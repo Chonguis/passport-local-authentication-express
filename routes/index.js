@@ -10,11 +10,20 @@ var router = express.Router();
 //La data user que va a ser disponible en el template, si está el template va a ser algo
 //if (!user) {...}
 router.get('/', function (req, res) {
-    res.render('index', { user : req.user });
+  res.render('index', {
+    user: req.user,
+    message: req.flash('info'),
+    messageSuccess: req.flash('infoSuccess')
+  });
 });
 
 router.get('/register', function(req, res) {
+  if(req.user){
+    req.flash('info', 'Already registered BEEYATCH!')
+    res.redirect('/')
+  } else {
     res.render('register', { });
+  }
 });
 
 //Este post de register debe ser algo parecido algo signup
@@ -35,6 +44,7 @@ router.post('/register', function(req, res, next) {
             if (err) {
                 return next(err);
             }
+            req.flash('infoSuccess', 'Succesfull registration!');
             res.redirect('/');
         });
       });
@@ -43,10 +53,16 @@ router.post('/register', function(req, res, next) {
 });
 
 router.get('/login', function(req, res) {
-    res.render('login', { user : req.user });
+  if(req.user){
+    req.flash('info', 'Already logged in BEEYATCH!');
+    res.redirect('/');
+  } else {
+    res.render('login', {user : req.user});
+  }
 });
 
 router.post('/login', passport.authenticate('local'), function(req, res) {
+    req.flash('infoSuccess', 'Succesfull login!');
     res.redirect('/');
 });
 
